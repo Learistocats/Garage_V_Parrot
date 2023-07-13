@@ -1,0 +1,109 @@
+.card {
+    width: 125%;
+    height: 250px;
+    background-image: url("../assets/covercard.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .card-content {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+  }
+  
+  .card-title {
+    font-size: 36px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    margin-left: 0px;
+    margin-right: 0px;
+    text-shadow:
+    1px 0px 0px #fff,
+    -1px 0px 0px #fff,
+    0px 1px 0px #fff,
+    0px -1px 0px #fff;
+  }
+  
+  .card-description {
+    display: flex;
+    font-size: 16px;
+    margin-left: 120px;
+    margin-right: 120px;
+    padding: 10px;
+    background-color: rgba(34,34,34,0.3);
+    background-size: cover;
+    background-position: center;
+    border-radius: 5px;
+    color: #fff;
+  }
+  
+  .contact-button {
+    margin-top: auto;
+    padding: 8px 16px;
+    background-color: #222222;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 150px;
+  }
+  
+  .contact-button:hover {
+    background-color: #0056b3;
+  }
+
+  .feature-card {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    margin: 15px; 
+    color: #333;
+    width: 90%;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+  
+  .feature-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+  }
+  
+  .feature-card-image img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 10px 10px 0 0;
+  }
+  
+  .feature-card-content {
+    padding: 20px;
+  }
+  
+  .feature-card-title {
+    font-size: 20px;
+    margin-top: 0;
+  }
+  
+  .feature-card-description {
+    font-size: 16px;
+  }
+
+  @media (min-width: 768px) {
+    .feature-card {
+      width: 350px;
+    }
+  }
