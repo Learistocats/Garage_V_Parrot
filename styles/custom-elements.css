@@ -65,6 +65,7 @@
   }
 
   .feature-card {
+    position: relative;
     display: flex;
     flex-direction: column;
     text-decoration: none;
@@ -75,8 +76,9 @@
     border-radius: 12px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     overflow: hidden;
+    transition: background-color 0.3s ease, transform 0.3s ease;
   }
-
+  
   .feature-card:hover {
     background-color: #e8e8e8;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -84,10 +86,16 @@
   }
   
   .feature-card-image {
+    position: relative;
     height: 200px;
     width: 100%;
     overflow: hidden;
     border-radius: 12px 12px 0 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .feature-card:hover .feature-card-image {
+    opacity: 0.8;
   }
   
   .feature-card-image img {
@@ -97,6 +105,7 @@
   }
   
   .feature-card-content {
+    position: relative;
     padding: 20px;
   }
   
@@ -107,6 +116,29 @@
   
   .feature-card-description {
     font-size: 16px;
+  }
+  
+  .feature-card-button {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .feature-card:hover .feature-card-button {
+    opacity: 1;
+  }
+  
+  .feature-card-button:hover {
+    background-color: #0056b3;
   }
   @media (min-width: 768px) {
     .feature-card {
