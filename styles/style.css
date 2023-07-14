@@ -8,6 +8,10 @@ body {
 header {
   padding: 10px;
   text-align: center;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row-reverse;
+  align-items: center;
 }
 
 main {
@@ -41,7 +45,11 @@ p {
 }
 
 .top-logo {
+    flex: 0 1 auto;
     width: 150px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }
 .card-list {
   display: flex;
@@ -52,10 +60,14 @@ p {
   width: auto;
 }
 
+
+
 /* Media query for larger screens */
 @media (min-width: 768px) {
   header {
     display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
     padding: 20px 40px;
   }
@@ -76,6 +88,11 @@ p {
 
   p {
     font-size: 20px;
+  }
+
+  .top-logo {
+    position:inherit;
+    margin-left: 45px;
   }
 
 }
