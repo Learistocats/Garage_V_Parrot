@@ -60,6 +60,43 @@ p {
   width: auto;
 }
 
+footer {
+  background-color: #222222;
+  color: #ffffff;
+  padding: 20px 0;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.contact-info, .opening-hours {
+  flex: 0 0 48%;
+}
+
+.contact-info h3, .opening-hours h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.contact-info p, .opening-hours p {
+  margin: 0;
+  text-align: center;
+}
+
+.contact-info p:not(:last-child), .opening-hours p:not(:last-child) {
+  margin-bottom: 5px;
+}
+
+.copyright {
+  text-align: center;
+  margin-top: 20px;
+}
+
+
 
 
 /* Media query for larger screens */
