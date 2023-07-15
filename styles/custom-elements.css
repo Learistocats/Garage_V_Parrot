@@ -273,6 +273,67 @@
   transform: scaleX(1);
   transform-origin: center;
 }
+
+#login-btn {
+  padding: 10px 20px;
+  color: #222222;
+  border: none;
+  cursor: pointer;
+}
+
+#login-form-container {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #f2f2f2;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  border: #222222;
+  border-radius: 5px;
+}
+
+#login-form {
+  text-align: center;
+}
+
+#login-form h2 {
+  margin-bottom: 20px;
+}
+
+#login-form label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+#login-form input {
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+#login-form button {
+  padding: 10px 20px;
+  background-color: #333;
+  color: #fff;
+  border:#222222;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#login-form button:hover {
+  background-color: #0056b3;
+}
+
+#close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  cursor: pointer;
+}
   @media (min-width: 768px) {
     .feature-card {
       width: 30%;

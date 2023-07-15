@@ -15,31 +15,45 @@
         <img src="../assets/logo.png" class="top-logo" />
         <nav>
             <ul class="breadcrumb">
-                <li><a href="../index.html" class="hover-underline-animation">Home</a></li>
-                <li><a href="../pages/occasion.html"  class="hover-underline-animation">Vehicles</a></li>
-                <li><a href="../pages/reviews.html"  class="hover-underline-animation">Reviews</a></li>
-                <li  class="current-page"><a href="#">Contact</a></li>
+                <li><a href="../index.html" class="hover-underline-animation">Accueil</a></li>
+                <li><a href="../pages/occasion.html" class="hover-underline-animation">Occasions</a></li>
+                <li><a href="../pages/reviews.html" class="hover-underline-animation">Avis</a></li>
+                <li class="current-page"><a href="contact.html">Contact</a></li>
             </ul>
         </nav>
         <button class="hamburger">
             <div class="bar"></div>
         </button>
         <div class="account-button">
-            <a href="#">
+            <a href="#" id="login-btn">
                 <img src="../assets/person-fill.svg" alt="Account Logo">
                 <span>Se Connecter</span>
             </a>
         </div>
     </header>
     <nav class="mobile-nav">
-        <a href="">Se Connecter</a>
-        <a href="">Home</a>
-        <a href="">Vehicles</a>
-        <a href="">Reviews</a>
-        <a href="">Contact</a>
+        <a href="#" id="login-btn-mobile">Se Connecter</a>
+        <a href="../index.html">Accueil</a>
+        <a href="occasion.html">Occasions</a>
+        <a href="reviews.html">Avis</a>
+        <a href="contact.html">Contact</a>
     </nav>
     <main>
+        <div id="login-form-container">
+            <div id="login-form">
+                <h2>Login</h2>
+                <span id="close-btn">&times;</span>
+                <form>
+                    <label for="username">Nom d'utilisateur:</label>
+                    <input type="text" id="username" name="username" required>
 
+                    <label for="password">Mot de passe:</label>
+                    <input type="password" id="password" name="password" required>
+
+                    <button type="submit">Se connecter</button>
+                </form>
+            </div>
+        </div>
     </main>
     <footer>
         <div class="footer-container">
