@@ -11,46 +11,22 @@
 </head>
 
 <body>
-  <header>
-    <img src="assets/logo.png" class="top-logo" />
-    <nav>
-      <ul class="breadcrumb">
-        <li class="current-page"><a href="index.html">Accueil</a></li>
-        <li><a href="pages/occasion.html" class="hover-underline-animation">Occasions</a></li>
-        <li><a href="pages/reviews.html" class="hover-underline-animation">Avis</a></li>
-        <li><a href="pages/contact.html" class="hover-underline-animation">Contact</a></li>
-      </ul>
-    </nav>
-    <button class="hamburger">
-      <div class="bar"></div>
-    </button>
-    <div class="account-button">
-      <a href="#" id="login-btn">
-        <img src="assets/person-fill.svg" alt="Account Logo">
-        <span>Se Connecter</span>
-      </a>
-    </div>
-  </header>
-  <nav class="mobile-nav">
-    <a href="#" id="login-btn-mobile">Se Connecter</a>
-    <a href="index.html">Accueil</a>
-    <a href="pages/occasion.html">Occasions</a>
-    <a href="pages/reviews.html">Avis</a>
-    <a href="pages/contact.html">Contact</a>
-  </nav>
+  <?php
+  $current_page = "Home";
+  $assets_path = "assets/";
+    include("assets/header.php");
+  ?>
   <main>
     <div id="login-form-container">
       <div id="login-form">
         <h2>Login</h2>
         <span id="close-btn">&times;</span>
-        <form>
+        <form action="index.php" method="post">
           <label for="username">Nom d'utilisateur:</label>
           <input type="text" id="username" name="username" required>
-    
           <label for="password">Mot de passe:</label>
           <input type="password" id="password" name="password" required>
-    
-          <button type="submit">Se connecter</button>
+          <button type="submit" name="login" value="Login">Se connecter</button>
         </form>
       </div>
     </div>
@@ -115,26 +91,22 @@
       </div>
     </div>
   </main>
-  <footer>
-    <div class="footer-container">
-      <div class="contact-info">
-        <h3>Contact Us</h3>
-        <p>Address: 123 Garage Street, City, Country</p>
-        <p>Phone: +1 123-456-7890</p>
-        <p>Email: info@example.com</p>
-      </div>
-      <div class="opening-hours">
-        <h3>Opening Hours</h3>
-        <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
-        <p>Saturday: 9:00 AM - 3:00 PM</p>
-        <p>Sunday: Closed</p>
-      </div>
-    </div>
-    <div class="copyright">
-      <p>&copy; 2023 Garage V Parrot. All rights reserved.</p>
-    </div>
-  </footer>
+  <?php
+    include("assets/footer.php");
+  ?>
   <script src="js/main.js"></script>
 </body>
 
 </html>
+
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+  $username = filter_input(INPUT_POST, "username", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+  $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_SPECIAL_CHARS);
+  
+  echo"Hello {$username}";
+  echo $password;
+}
+?>
+
