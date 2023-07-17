@@ -12,24 +12,18 @@
 
 <body>
   <?php
-  $current_page = "Home";
-  $assets_path = "assets/";
+    session_start();
+    require_once 'scripts/db_connection.php';
+    $fetchServicesSql = "SELECT * FROM services";
+    $servicesResult = mysqli_query($conn, $fetchServicesSql);
+    $current_page = "Home";
+    $root_path = "./";
     include("assets/header.php");
   ?>
   <main>
-    <div id="login-form-container">
-      <div id="login-form">
-        <h2>Login</h2>
-        <span id="close-btn">&times;</span>
-        <form action="index.php" method="post">
-          <label for="username">Nom d'utilisateur:</label>
-          <input type="text" id="username" name="username" required>
-          <label for="password">Mot de passe:</label>
-          <input type="password" id="password" name="password" required>
-          <button type="submit" name="login" value="Login">Se connecter</button>
-        </form>
-      </div>
-    </div>
+    <?php
+    include("scripts/login.php");
+    ?>
     <div class="card">
       <div class="card-content">
         <h2 class="card-title">Garage V.Parrot</h2>
@@ -41,39 +35,28 @@
     <div class="section">
       <h2 class="section-titles">Services</h2>
       <div class="card-list">
-        <a href="#" class="feature-card">
-          <div class="feature-card-image">
-            <img src="assets/controle_technique.jpg" alt="Card Image">
-          </div>
-          <div class="feature-card-content">
-            <h2 class="feature-card-title">Controle Technique</h2>
-            <p class="feature-card-description">Renouveler le controle technique de votre véhicule chez nous à partir de
-              65€</p>
-            <button class="feature-card-button">Nous contacter</button>
-          </div>
-        </a>
-        <a href="#" class="feature-card">
-          <div class="feature-card-image">
-            <img src="assets/revision.jpg" alt="Card Image">
-          </div>
-          <div class="feature-card-content">
-            <h2 class="feature-card-title">Révision</h2>
-            <p class="feature-card-description">Nos experts peuvent diagnostiquer et régler les dysfonctionnement de
-              votre véhicule au meilleur prix!</p>
-            <button class="feature-card-button">Nous contacter</button>
-          </div>
-        </a>
-        <a href="#" class="feature-card">
-          <div class="feature-card-image">
-            <img src="assets/vidange.jpg" alt="Card Image">
-          </div>
-          <div class="feature-card-content">
-            <h2 class="feature-card-title">Vidange</h2>
-            <p class="feature-card-description">Votre véhicule à besoin d'un changement d'huile? Nous pouvons faire ça
-              pour vous, si vous êtes déjà client chez nous, le filtre est offert</p>
-            <button class="feature-card-button">Nous contacter</button>
-          </div>
-        </a>
+        <?php
+          if (!$servicesResult) {
+            die('Error fetching data: ' . mysqli_error($conn));
+          }
+          else{
+            while ($row = mysqli_fetch_assoc($servicesResult)) {
+              $title = $row['title'];
+              $description = $row['description'];
+              $image_name = $row['image_name'];
+            echo '<a href="#" class="feature-card">';
+            echo '<div class="feature-card-image">';
+            echo '<img src="' . $root_path . 'assets/' . $image_name . '" alt="Card Image">';
+            echo '</div>';
+            echo '<div class="feature-card-content">';
+            echo '<h2 class="feature-card-title">' . $title .'</h2>';
+            echo '<p class="feature-card-description">' . $description .'</p>';
+            echo '<button class="feature-card-button">Nous contacter</button>';
+            echo '</div>';
+            echo '</a>';
+            }
+          }
+        ?>
       </div>
       <h2 class="section-titles">Occasions</h2>
       <div class="section">
@@ -99,14 +82,4 @@
 
 </html>
 
-<?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-  $username = filter_input(INPUT_POST, "username", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-  $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_SPECIAL_CHARS);
-  
-  echo"Hello {$username}";
-  echo $password;
-}
-?>
 

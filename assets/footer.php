@@ -16,4 +16,11 @@
     <div class="copyright">
         <p>&copy; 2023 Garage V Parrot. All rights reserved.</p>
     </div>
+    <?php
+        if (isset($_SESSION['role'])) {
+            echo '<div class="disconnect">';
+            echo '<a href="' . $root_path . 'scripts/logout.php" class="disconnect">Se deconnecter</a>';
+            echo '</div>';
+        }
+    ?>
 </footer>

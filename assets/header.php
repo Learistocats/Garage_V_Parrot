@@ -1,12 +1,11 @@
 <header>
     <?php
-        echo '<img src="' . $assets_path . 'logo.png" class="top-logo" />'
+    echo '<img src="' . $root_path . 'assets/logo.png" class="top-logo" />'
     ?>
     <nav>
         <ul class="breadcrumb">
             <?php
-            switch ($current_page) 
-            {
+            switch ($current_page) {
                 case "Home":
                     echo '  <li class="current-page"><a href="index.php">Accueil</a></li>';
                     echo '  <li><a href="pages/occasion.php" class="hover-underline-animation">Occasions</a></li>';
@@ -38,32 +37,48 @@
     <button class="hamburger">
         <div class="bar"></div>
     </button>
-    <div class="account-button">
-        <a href="#" id="login-btn">
-            <?php
-            echo '<img src="'. $assets_path . 'person-fill.svg" alt="Account Logo">';
-            ?>
-            <span>Se Connecter</span>
-        </a>
-    </div>
-    <nav class="mobile-nav">
     <?php
-    if ($current_page == "Home") 
-    {
-        echo '<a href="#" id="login-btn-mobile">Se Connecter</a>';
-        echo '<a href="index.php">Accueil</a>';
-        echo '<a href="pages/occasion.php">Occasions</a>';
-        echo '<a href="pages/reviews.php">Avis</a>';
-        echo '<a href="pages/contact.php">Contact</a>';
+    if (isset($_SESSION['role']) && ($_SESSION['role'] > 0)) {
+        echo    '<div class="account-button">';
+        echo    '<a href="#">';
+        echo '<img src="' . $root_path . 'assets/person-fill.svg" alt="Account Logo">';
+        echo    '<span>Panneau de controle</span>';
+        echo    '</a>';
+        echo    '</div>';
     }
-    else 
-    {
-        echo '<a href="#" id="login-btn-mobile">Se Connecter</a>';
-        echo '<a href="../index.php">Accueil</a>';
-        echo '<a href="occasion.php">Occasions</a>';
-        echo '<a href="reviews.php">Avis</a>';
-        echo '<a href="contact.php">Contact</a>';
+
+    else {
+        echo    '<div class="account-button">';
+        echo    '<a href="#" id="login-btn">';
+        echo '<img src="' . $root_path . 'assets/person-fill.svg" alt="Account Logo">';
+        echo    '<span>Se connecter</span>';
+        echo    '</a>';
+        echo    '</div>';
     }
     ?>
+    <nav class="mobile-nav">
+        <?php
+        if (isset($_SESSION['role']) && ($_SESSION['role'] > 0)) {
+            echo '<a href="#" id="login-btn-mobile">Panneau de Contrôle</a>';
+            echo '<a href="index.php">Accueil</a>';
+            echo '<a href="pages/occasion.php">Occasions</a>';
+            echo '<a href="pages/reviews.php">Avis</a>';
+            echo '<a href="pages/contact.php">Contact</a>';
+        } else {
+            if ($current_page == "Home") {
+                echo '<a href="#" id="login-btn-mobile">Se Connecter</a>';
+                echo '<a href="index.php">Accueil</a>';
+                echo '<a href="pages/occasion.php">Occasions</a>';
+                echo '<a href="pages/reviews.php">Avis</a>';
+                echo '<a href="pages/contact.php">Contact</a>';
+            } else {
+                echo '<a href="#" id="login-btn-mobile">Se Connecter</a>';
+                echo '<a href="../index.php">Accueil</a>';
+                echo '<a href="occasion.php">Occasions</a>';
+                echo '<a href="reviews.php">Avis</a>';
+                echo '<a href="contact.php">Contact</a>';
+            }
+        }
+        ?>
     </nav>
 </header>

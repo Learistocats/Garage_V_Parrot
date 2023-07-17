@@ -12,24 +12,16 @@
 
 <body>
     <?php
+    session_start();
+    require_once("../scripts/db_connection.php");
     $current_page = "Occasion";
-    $assets_path = "../assets/";
+    $root_path = "../";
     include("../assets/header.php");
     ?>
     <main>
-        <div id="login-form-container">
-            <div id="login-form">
-                <h2>Login</h2>
-                <span id="close-btn">&times;</span>
-                <form>
-                    <label for="username">Nom d'utilisateur:</label>
-                    <input type="text" id="username" name="username" required>
-                    <label for="password">Mot de passe:</label>
-                    <input type="password" id="password" name="password" required>
-                    <button type="submit">Se connecter</button>
-                </form>
-            </div>
-        </div>
+    <?php
+        include("../scripts/login.php");
+    ?>
     </main>
     <?php
     include("../assets/footer.php");
