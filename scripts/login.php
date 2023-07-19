@@ -29,7 +29,6 @@ $current_page = $_SERVER['PHP_SELF'];
                     $_SESSION['user_id'] = $user_id;
                     $_SESSION['username'] = $username;
                     $_SESSION['role'] = $clearance_level;
-                    echo $_SESSION['role'];
                 }
                 
             } 
@@ -37,5 +36,6 @@ $current_page = $_SERVER['PHP_SELF'];
             echo "Username not found.";
             }
             mysqli_stmt_close($stmt);
+            header("Refresh:0");
         }
 ?>

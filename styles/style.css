@@ -3,6 +3,7 @@ body {
   margin: 0;
   padding: 0;
   color: #222222;
+  overflow-x: hidden;
 }
 
 header {
@@ -26,6 +27,40 @@ main {
 h1 {
   font-size: 24px;
   margin-top: 0;
+}
+
+table {
+  border-collapse: separate;
+  border-spacing: 0; 
+  width: 100%;
+}
+
+th, td {
+  border: 1px solid black;
+  padding: 8px;
+  text-align: center;
+}
+
+thead {
+  background-color: #f2f2f2;
+}
+
+tr {
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+tbody tr {
+  margin-bottom: 10px;
+}
+
+.delete-row, .add-row {
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.add-row {
+  font-weight: bold;
 }
 
 .section {
@@ -54,7 +89,7 @@ p {
 .card-list {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
   flex-wrap: wrap;
   width: auto;

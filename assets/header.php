@@ -30,6 +30,12 @@
                     echo '  <li  class="current-page"><a href="reviews.php">Avis</a></li>';
                     echo '  <li><a href="contact.php" class="hover-underline-animation">Contact</a></li>';
                     break;
+                case "Admin":
+                    echo '  <li><a href="../index.php" class="hover-underline-animation">Accueil</a></li>';
+                    echo '  <li><a href="occasion.php" class="hover-underline-animation">Occasions</a></li>';
+                    echo '  <li><a class="hover-underline-animation" href="reviews.php">Avis</a></li>';
+                    echo '  <li><a href="contact.php" class="hover-underline-animation">Contact</a></li>';
+                    break;
             }
             ?>
         </ul>
@@ -40,7 +46,7 @@
     <?php
     if (isset($_SESSION['role']) && ($_SESSION['role'] > 0)) {
         echo    '<div class="account-button">';
-        echo    '<a href="#">';
+        echo    '<a href="' . $root_path. 'pages/managing_panel.php">';
         echo '<img src="' . $root_path . 'assets/person-fill.svg" alt="Account Logo">';
         echo    '<span>Panneau de controle</span>';
         echo    '</a>';
@@ -59,25 +65,17 @@
     <nav class="mobile-nav">
         <?php
         if (isset($_SESSION['role']) && ($_SESSION['role'] > 0)) {
-            echo '<a href="#" id="login-btn-mobile">Panneau de Contrôle</a>';
-            echo '<a href="index.php">Accueil</a>';
-            echo '<a href="pages/occasion.php">Occasions</a>';
-            echo '<a href="pages/reviews.php">Avis</a>';
-            echo '<a href="pages/contact.php">Contact</a>';
+            echo '<a href="' . $root_path . 'pages/managing_panel.php">Panneau de Contrôle</a>';
+            echo '<a href="' . $root_path . 'index.php">Accueil</a>';
+            echo '<a href="' . $root_path . ' pages/occasion.php">Occasions</a>';
+            echo '<a href="' . $root_path . 'pages/reviews.php">Avis</a>';
+            echo '<a href="' . $root_path . 'pages/contact.php">Contact</a>';
         } else {
-            if ($current_page == "Home") {
                 echo '<a href="#" id="login-btn-mobile">Se Connecter</a>';
-                echo '<a href="index.php">Accueil</a>';
-                echo '<a href="pages/occasion.php">Occasions</a>';
-                echo '<a href="pages/reviews.php">Avis</a>';
-                echo '<a href="pages/contact.php">Contact</a>';
-            } else {
-                echo '<a href="#" id="login-btn-mobile">Se Connecter</a>';
-                echo '<a href="../index.php">Accueil</a>';
-                echo '<a href="occasion.php">Occasions</a>';
-                echo '<a href="reviews.php">Avis</a>';
-                echo '<a href="contact.php">Contact</a>';
-            }
+                echo '<a href="' . $root_path . 'index.php">Accueil</a>';
+                echo '<a href="' . $root_path . 'pages/occasion.php">Occasions</a>';
+                echo '<a href="' . $root_path . 'pages/reviews.php">Avis</a>';
+                echo '<a href="' . $root_path . 'pages/contact.php">Contact</a>';
         }
         ?>
     </nav>

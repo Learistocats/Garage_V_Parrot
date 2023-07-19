@@ -13,7 +13,6 @@
 <body>
     <?php
     session_start();
-    require_once("../scripts/db_connection.php");
     $current_page = "Contact";
     $root_path = "../";
     include("../assets/header.php");
