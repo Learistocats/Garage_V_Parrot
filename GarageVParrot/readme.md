@@ -16,7 +16,7 @@
 
 ###Installation du site 
 
--Dans un navigateur, taper dans la barre d'url "localhost:80"
+-Dans un navigateur, taper dans la barre d'url "localhost/GarageVParrot"
 -Dans l'interface qui s'affiche, entrer un nom d'utilisateur et un mot de passe, il servira d'accès admin au back-office
 -Le site devrait être fonctionnel
 
