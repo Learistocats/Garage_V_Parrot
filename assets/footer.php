@@ -1,16 +1,23 @@
 <footer>
     <div class="footer-container">
         <div class="contact-info">
-            <h3>Contact Us</h3>
-            <p>Address: 123 Garage Street, City, Country</p>
-            <p>Phone: +1 123-456-7890</p>
-            <p>Email: info@example.com</p>
+            <h3>Nous contacter</h3>
+            <p>Adresse: 123 Rue des Garages, Montpellier, France</p>
+            <p>Téléphone: +1 123-456-7890</p>
+            <p>Email: garagevictorparrot@gmail.com</p>
         </div>
         <div class="opening-hours">
-            <h3>Opening Hours</h3>
-            <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
-            <p>Saturday: 9:00 AM - 3:00 PM</p>
-            <p>Sunday: Closed</p>
+            <?php
+            require_once($root_path . 'scripts/db_connection.php');
+            $sqlSchedule = "SELECT * FROM schedule LIMIT 1";
+            $sqlScheduleResults = mysqli_query($conn, $sqlSchedule);
+            while ($row = mysqli_fetch_assoc($sqlScheduleResults)) {
+                echo '<h3>Horaires</h3>
+                <p>' . $row['line1'] . '</p>
+                <p>' . $row['line2'] . '</p>
+                <p>' . $row['line3'] . '</p>';
+            }
+            ?>
         </div>
     </div>
     <div class="copyright">

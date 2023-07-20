@@ -25,3 +25,31 @@ window.onload = function () {
         loginFormContainer.style.display = 'none';
     });
 }
+
+const slider = document.querySelector('.slider');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+
+let currentIndex = 0;
+
+function showImage(index) {
+    const images = slider.querySelectorAll('img');
+    images.forEach((image, i) => {
+        image.style.display = i === index ? 'block' : 'none';
+    });
+}
+
+function prevImage() {
+    currentIndex = (currentIndex - 1 + slider.children.length) % slider.children.length;
+    showImage(currentIndex);
+}
+
+function nextImage() {
+    currentIndex = (currentIndex + 1) % slider.children.length;
+    showImage(currentIndex);
+}
+
+prevBtn.addEventListener('click', prevImage);
+nextBtn.addEventListener('click', nextImage);
+
+showImage(currentIndex);

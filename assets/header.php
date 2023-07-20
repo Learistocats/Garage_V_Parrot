@@ -67,7 +67,7 @@
         if (isset($_SESSION['role']) && ($_SESSION['role'] > 0)) {
             echo '<a href="' . $root_path . 'pages/managing_panel.php">Panneau de Contrôle</a>';
             echo '<a href="' . $root_path . 'index.php">Accueil</a>';
-            echo '<a href="' . $root_path . ' pages/occasion.php">Occasions</a>';
+            echo '<a href="' . $root_path . 'pages/occasion.php">Occasions</a>';
             echo '<a href="' . $root_path . 'pages/reviews.php">Avis</a>';
             echo '<a href="' . $root_path . 'pages/contact.php">Contact</a>';
         } else {

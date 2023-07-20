@@ -137,6 +137,19 @@ footer {
   font-size: 16px;
 }
 
+.article-section {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+
+
+}
+  .contact-form {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+
 
 
 

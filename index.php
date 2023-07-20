@@ -1,83 +1,183 @@
 <!DOCTYPE html>
-<html lang="fr">
-
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Garage V.Parrot</title>
-    <link rel="stylesheet" href="styles/normalize.css">
-    <link rel="stylesheet" href="styles/style.css">
-    <link rel="stylesheet" href="styles/custom-elements.css">
+    <title>Document</title>
 </head>
-
 <body>
-    <?php
-    session_start();
-    require_once 'scripts/db_connection.php';
-    $fetchServicesSql = "SELECT * FROM services";
-    $servicesResult = mysqli_query($conn, $fetchServicesSql);
-    $current_page = "Home";
-    $root_path = "./";
-    include("assets/header.php");
-    ?>
-    <main>
-        <?php
-        include("scripts/login.php");
-        ?>
-        <div class="card">
-            <div class="card-content">
-                <h2 class="card-title">Garage V.Parrot</h2>
-                <p class="card-description">Vente et rachat de véhicule d'occasion et gamme complète de services
-                    d'entretien et de réparation pour votre véhicule depuis 1985</p>
-                <button class="contact-button">Nous contacter</button>
-            </div>
-        </div>
-        <div class="section">
-            <h2 class="section-titles">Services</h2>
-            <div class="card-list">
-                <?php
-                if (!$servicesResult) {
-                    die('Error fetching data: ' . mysqli_error($conn));
-                } else {
-                    while ($row = mysqli_fetch_assoc($servicesResult)) {
-                        $title = $row['title'];
-                        $description = $row['description'];
-                        $image_name = $row['image_name'];
-                        echo '<a href="#" class="feature-card">';
-                        echo '  <div class="feature-card-image">';
-                        echo '      <img src="' . $root_path . 'uploads/' . $image_name . '" alt="Card Image">';
-                        echo '  </div>';
-                        echo '  <div class="feature-card-content">';
-                        echo '      <h2 class="feature-card-title">' . $title . '</h2>';
-                        echo '      <p class="feature-card-description">' . $description . '</p>';
-                        echo '      <button class="feature-card-button">Nous contacter</button>';
-                        echo '  </div>';
-                        echo '</a>';
-                    }
-                }
-                mysqli_close($conn);
-                ?>
-            </div>
-            <h2 class="section-titles">Occasions</h2>
-            <div class="section">
-                <div class="card-list">
-                    <a href="#" class="feature-card">
-                        <div class="feature-card-image">
-                            <img src="your-image-url.jpg" alt="Card Image">
-                        </div>
-                        <div class="feature-card-content">
-                            <h2 class="feature-card-title">Title</h2>
-                            <p class="feature-card-description">Description goes here.</p>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </main>
-    <?php
-    include("assets/footer.php");
-    ?>
-    <script src="js/main.js"></script>
+    <h1>Installation du site web</h1>
+    <form action="index.php" method="post">
+        <label for="username">Nom d'utilisateur compte admin:</label>
+        <input type="text" id="username" name="username" required>
+        <label for="password">Mot de passe compte admin</label>
+        <input type="password" id="password" name="password" required>
+        <button type="submit" name="login" value="Login">Valider</button>
+    </form>
 </body>
-
 </html>
+<?php
+require_once './private/config.php';
+$host = DB_HOST;
+$username = DB_USER; 
+$password = DB_PASS; 
+$conn = mysqli_connect($host, $username, $password);
+
+if (!$conn) {
+    die('Connection failed: ' . mysqli_connect_error());
+}
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    $adminUsername = filter_input(INPUT_POST, "username", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $adminPassword = filter_input(INPUT_POST, "password", FILTER_SANITIZE_SPECIAL_CHARS);
+
+    $databaseName = DB_NAME;
+
+    // Create the database
+    $sql = "CREATE DATABASE IF NOT EXISTS $databaseName";
+
+    if (mysqli_query($conn, $sql)) {
+        echo "Database '$databaseName' created successfully.";
+    } else {
+        echo "Error creating database: " . mysqli_error($conn);
+        exit;
+    }
+
+    mysqli_select_db($conn, $databaseName);
+
+    //Creating the users table
+
+    $sqlCreateTable = "CREATE TABLE IF NOT EXISTS users (
+        id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        username VARCHAR(25) NOT NULL,
+        password VARCHAR(255) NOT NULL,
+        clearance_level INT NOT NULL
+    )";
+
+    if (mysqli_query($conn, $sqlCreateTable)) {
+        echo "Table 'users' created successfully.";
+    } else {
+        echo "Error creating table: " . mysqli_error($conn);
+        exit;
+    }
+
+    $adminPasswordHash = password_hash($adminPassword, PASSWORD_DEFAULT);
+    $adminClearanceLevel = 2;
+    $sqlInsertAdmin = "INSERT INTO users (username, password, clearance_level) 
+    VALUES ('$adminUsername', '$adminPasswordHash', $adminClearanceLevel)";
+
+if (mysqli_query($conn, $sqlInsertAdmin)) {
+    echo "Base admin user inserted successfully.<br>";
+} else {
+    echo "Error inserting admin user: " . mysqli_error($conn);
+    exit;
+}
+$sqlCreateServicesTable = "CREATE TABLE IF NOT EXISTS services (
+    id INT(11) AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(30) NOT NULL,
+    description TEXT NOT NULL,
+    image_name VARCHAR(255) NOT NULL
+)";
+
+if (mysqli_query($conn, $sqlCreateServicesTable)) {
+    echo "Table 'services' created successfully.<br>";
+} else {
+    echo "Error creating 'services' table: " . mysqli_error($conn);
+    exit;
+}
+
+$sqlAddServices = "INSERT INTO services (title, description, image_name)
+              VALUES
+              ('Controle Technique', 'Renouveler le controle technique de votre véhicule chez nous à partir de
+              65€', 'controle_technique.jpg'),
+              ('Révision', 'Nos experts peuvent diagnostiquer et régler les dysfonctionnement de
+              votre véhicule au meilleur prix!', 'revision.jpg'),
+              ('Vidange', 'Votre véhicule à besoin d\'un changement d\'huile? Nous pouvons faire ça
+              pour vous, si vous êtes déjà client chez nous, le filtre est offert', 'vidange.jpg')";
+
+if (mysqli_query($conn, $sqlAddServices)) {
+    echo "3 rows added to 'services' table.<br>";
+} else {
+    echo "Error adding rows to 'services' table: " . mysqli_error($conn);
+    exit;
+}
+
+$sqlCreateOccasionsTable = "CREATE TABLE IF NOT EXISTS occasions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    price DECIMAL(10, 2) NOT NULL,
+    mileage INT NOT NULL,
+    description TEXT NOT NULL,
+    featured BOOLEAN NOT NULL
+)";
+
+if (mysqli_query($conn, $sqlCreateOccasionsTable)) {
+    echo "Table 'occasions' created successfully.<br>";
+} else {
+    echo "Error creating 'occasions' table: " . mysqli_error($conn);
+    exit;
+}
+
+$sqlCreateOccasionsImageTable = "CREATE TABLE IF NOT EXISTS occasion_images (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    occasion_id INT NOT NULL,
+    image_name VARCHAR(255) NOT NULL,
+    FOREIGN KEY (occasion_id) REFERENCES occasions(id) ON DELETE CASCADE
+);";
+
+if (mysqli_query($conn, $sqlCreateOccasionsImageTable)) {
+    echo "Table 'occasions_images' created successfully.<br>";
+} else {
+    echo "Error creating 'occasions_images' table: " . mysqli_error($conn);
+    exit;
+}
+
+$sqlCreateUnapprovedReviewsTable = "CREATE TABLE IF NOT EXISTS unapproved_reviews (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    sender VARCHAR(25) NOT NULL,
+    receiver VARCHAR(25) NOT NULL,
+    rating VARCHAR(25) NOT NULL,
+    review VARCHAR(255) NOT NULL
+);";
+
+if (mysqli_query($conn, $sqlCreateUnapprovedReviewsTable)) {
+    echo "Table 'unapproved_reviews' created successfully.<br>";
+} else {
+    echo "Error creating 'reviews' table: " . mysqli_error($conn);
+    exit;
+}     
+
+$sqlCreateReviewsTable = "CREATE TABLE IF NOT EXISTS reviews (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    sender VARCHAR(25) NOT NULL,
+    receiver VARCHAR(25) NOT NULL,
+    rating VARCHAR(25) NOT NULL,
+    review VARCHAR(255) NOT NULL
+);";
+
+if (mysqli_query($conn, $sqlCreateReviewsTable)) {
+    echo "Table 'reviews' created successfully.<br>";
+} else {
+    echo "Error creating 'reviews' table: " . mysqli_error($conn);
+    exit;
+}  
+
+$sqlCreateScheduleTable = "CREATE TABLE IF NOT EXISTS schedule (
+    line1 varchar(40),
+    line2 VARCHAR(40),
+    line3 VARCHAR(40));";
+
+if (mysqli_query($conn, $sqlCreateScheduleTable)) {
+    echo "Schedule 'reviews' created successfully.<br>";
+} else {
+    echo "Error creating 'schedule' table: " . mysqli_error($conn);
+    exit;
+}  
+
+rename("index.php", "setup.php");
+rename("home.php", "index.php");
+header("Refresh:0");
+
+
+    mysqli_close($conn);
+}

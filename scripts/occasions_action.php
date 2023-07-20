@@ -21,60 +21,57 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     }
 }
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['action'])) {
-        $action = $_POST['action'];
-        if ($action == 'add_service') {
-            if (isset($_POST['title']) && isset($_POST['description'])) {
-                $title = $_POST['title'];
-                $description = $_POST['description'];
-                if (isset($_FILES["image"])) {
-                    $target_dir = "../uploads/";
-                    $target_file = $target_dir . basename($_FILES["image"]["name"]);
-                    $image_name = basename($_FILES["image"]["name"]);
-                    $uploadOk = 1;
-                    $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-                    $check = getimagesize($_FILES["image"]["tmp_name"]);
-                    if ($check !== false) {
-                        $uploadOk = 1;
-                    } else {
-                        echo "Ce fichier n'est pas une image.";
-                        $uploadOk = 0;
-                    }
-                    if (file_exists($target_file)) {
-                        echo "Un fichier avec ce nom existe déjà.";
-                        $uploadOk = 0;
-                    }
-                    if ($_FILES["image"]["size"] > 1000000) {
-                        echo "Désolée, l'image est trop lourde.";
-                        $uploadOk = 0;
-                    }
-                    if (
-                        $imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-                        && $imageFileType != "gif"
-                    ) {
-                        echo "Désolée, seulements les extensions JPG, JPEG, PNG & GIF files sont autorisés.";
-                        $uploadOk = 0;
-                    }
-                    if ($uploadOk == 0) {
-                        echo "Sorry, your file was not uploaded.";
-                    } else {
-                        if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
-                            $sql = "INSERT INTO services (title, description, image_name) VALUES (?, ?, ?)";
-                            $stmt = $conn->prepare($sql);
-                            $stmt->bind_param('sss', $title, $description, $image_name);
-                            if (!($stmt->execute())) {
-                                echo "Error inserting row: " . $stmt->error;
-                            }
-                            $stmt->close();
-                            $conn->close();
-                            echo "The file " . htmlspecialchars(basename($_FILES["image"]["name"])) . " has been uploaded.";
-                        } else {
-                            echo "Sorry, there was an error uploading your file.";
-                        }
-                    }
+    if (isset($_POST['actionO'])) {
+        $action = $_POST['actionO'];
+        if ($action == 'add_occasion') {
+            if (isset($_POST['titleO']) && isset($_POST['descriptionO'])) {
+                if (isset($_POST['featured']) && ($_POST['featured'] == 'yes')) {
+                    $featured = 1;
                 }
+                else {
+                    $featured = 0;
+                }
+                $title = $_POST['titleO'];
+                $description = $_POST['descriptionO'];
+                $price = $_POST['priceO'];
+                $mileage = $_POST['mileageO'];
+                if ($conn->connect_error) {
+                    die('Connection failed: ' . $conn->connect_error);
+                }
+                $occasion_sql = "INSERT INTO occasions (title, description, price, mileage, featured) VALUES (?, ?, ?, ?, ?)";
+                $occasion_stmt = $conn->prepare($occasion_sql);
+                $occasion_stmt->bind_param('ssdii', $title, $description, $price, $mileage, $featured);
+
+                if ($occasion_stmt->execute()) {
+                    $occasion_id = $conn->insert_id;
+                    $occasion_stmt->close();
+                    if (!empty($_FILES['imageO'])) {
+                        $upload_dir = '../uploads/';
+                        $uploaded_images = array();
+                        foreach ($_FILES['imageO']['tmp_name'] as $key => $tmp_name) {
+                            $file_name = $_FILES['imageO']['name'][$key];
+                            $file_tmp = $_FILES['imageO']['tmp_name'][$key];
+                            $file_path = $upload_dir . $file_name;
+                            if (move_uploaded_file($file_tmp, $file_path)) {
+                                $uploaded_images[] = $file_name;
+                            } else {
+                                echo "Error uploading file: " . $_FILES['imageO']['error'][$key];
+                            }
+                        }
+                        $image_sql = "INSERT INTO occasion_images (occasion_id, image_name) VALUES (?, ?)";
+                        $image_stmt = $conn->prepare($image_sql);
+                        $image_stmt->bind_param('is', $occasion_id, $file_name);
+                        foreach ($uploaded_images as $file_name) {
+                            $image_stmt->execute();
+                        }
+                        $image_stmt->close();
+                    }
+                    echo "Occasion and images added successfully.";
+                } else {
+                    echo "Error inserting occasion: " . $occasion_stmt->error;
+                }
+                $conn->close();
             }
         }
     }
 }
-?>

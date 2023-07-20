@@ -24,7 +24,7 @@ function showContent(contentId) {
 
 function deleteRow(rowId) {
     var xhttp = new XMLHttpRequest();
-    var id = "row-" + rowId;
+    var id = "service-row-" + rowId;
     var action = "delete";
     var element = document.getElementById(id)
     if (element) {
@@ -34,7 +34,7 @@ function deleteRow(rowId) {
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             console.log(this.responseText);
-            var rowToDelete = document.getElementById("row-" + rowId);
+            var rowToDelete = document.getElementById(id);
             if (rowToDelete) {
                 rowToDelete.remove();
             }
@@ -51,6 +51,10 @@ function openForm() {
 
 function closeForm() {
     document.getElementById("myForm").style.display = "none";
+}
+
+function closeOccasionForm() {
+    document.getElementById("formPopup").style.display = "none";
 }
 
 function addService() {
@@ -71,7 +75,7 @@ function addService() {
 
 function deleteOccasionRow(rowId) {
     var xhttp = new XMLHttpRequest();
-    var id = "row-" + rowId;
+    var id = "occasion-row-" + rowId;
     var action = "delete";
     var element = document.getElementById(id)
     if (element) {
@@ -81,7 +85,7 @@ function deleteOccasionRow(rowId) {
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             console.log(this.responseText);
-            var rowToDelete = document.getElementById("row-" + rowId);
+            var rowToDelete = document.getElementById(id);
             if (rowToDelete) {
                 rowToDelete.remove();
             }
@@ -92,50 +96,129 @@ function deleteOccasionRow(rowId) {
     xhttp.send();
 }
 
-var droppedFiles = [];
-
 function openOccasionsForm() {
     var popup = document.getElementById("formPopup");
     popup.style.display = "block";
 }
 
-function allowDrop(event) {
-    event.preventDefault();
-}
-
-function handleDrop(event) {
-    event.preventDefault();
-    var files = event.dataTransfer.files;
-    for (var i = 0; i < files.length; i++) {
-        if (droppedFiles.length < 5) {
-            droppedFiles.push(files[i]);
-            // Display file names (optional)
-            console.log("File added: " + files[i].name);
-        } else {
-            console.log("Maximum 5 files allowed.");
-        }
-    }
-}
-
 function submitOccasionsForm() {
-    var form = document.getElementById("myForm");
+    var form = document.getElementById("addOccasionForm");
     var formData = new FormData(form);
-
-    // Append the droppedFiles to the formData
-    for (var i = 0; i < droppedFiles.length; i++) {
-        formData.append("images[]", droppedFiles[i]);
-    }
 
     var xhttp = new XMLHttpRequest();
 
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            // Handle the server response here
             console.log(this.responseText);
         }
     };
+    xhttp.open("POST", "../scripts/occasions_action.php", true);
+    xhttp.send(formData);
+}
 
-    xhttp.open("POST", "handle_form.php", true);
+function denyReview(rowId) {
+    var xhttp = new XMLHttpRequest();
+    var id = "review-row-" + rowId;
+    var action = "deny";
+    var element = document.getElementById(id)
+    if (element) {
+        element.remove();
+    }
+
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log(this.responseText);
+            var rowToDelete = document.getElementById(id);
+            if (rowToDelete) {
+                rowToDelete.remove();
+            }
+        }
+    };
+
+    xhttp.open("GET", "../scripts/review_actions.php?id=" + rowId + "&action=" + action, true);
+    xhttp.send();
+}
+
+function acceptReview(rowId) {
+    var xhttp = new XMLHttpRequest();
+    var id = "review-row-" + rowId;
+    var action = "accept";
+    var element = document.getElementById(id)
+    if (element) {
+        element.remove();
+    }
+
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log(this.responseText);
+            var rowToDelete = document.getElementById(id);
+            if (rowToDelete) {
+                rowToDelete.remove();
+            }
+        }
+    };
+
+    xhttp.open("GET", "../scripts/review_actions.php?id=" + rowId + "&action=" + action, true);
+    xhttp.send();
+}
+
+function openUserForm() {
+    document.getElementById("userForm").style.display = "block";
+}
+
+function closeUserForm() {
+    document.getElementById("userForm").style.display = "none";
+}
+
+function addUser() {
+    var form = document.getElementById("addUserForm");
+    var formData = new FormData(form);
+
+    var xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function() {
+        if (this.readyState === 4) {
+            if (this.status === 200) {
+                // Request was successful, handle the response (if needed)
+                console.log('Response from PHP:', this.responseText);
+            } else {
+                // Request failed, handle the error (if needed)
+                console.error('XMLHttpRequest error:', this.status, this.statusText);
+            }
+        }
+    };
+
+    xhttp.open("POST", "../scripts/user_action.php", true);
+    xhttp.send(formData);
+}
+
+function showScheduleForm() {
+    document.getElementById("scheduleForm").style.display = "block";
+}
+
+function closeScheduleForm() {
+    document.getElementById("scheduleForm").style.display = "none";
+}
+
+function updateSchedule() {
+    var form = document.getElementById("updateScheduleForm");
+    var formData = new FormData(form);
+
+    var xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function() {
+        if (this.readyState === 4) {
+            if (this.status === 200) {
+                // Request was successful, handle the response (if needed)
+                console.log('Response from PHP:', this.responseText);
+            } else {
+                // Request failed, handle the error (if needed)
+                console.error('XMLHttpRequest error:', this.status, this.statusText);
+            }
+        }
+    };
+
+    xhttp.open("POST", "../scripts/schedule_action.php", true);
     xhttp.send(formData);
 }
 
