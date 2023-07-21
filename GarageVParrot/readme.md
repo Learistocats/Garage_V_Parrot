@@ -13,6 +13,7 @@
 -Lancer xampp et démarrer les services Apache et MySQL
 -Ouvrez le répertoire d'installation de xampp (ou cliquer sur le bouton "explorer" de l'interface)
 -Copier le dossier GarageVParrot dans le dossier htdocs
+-Dans le répertoire GarageVParrot/private ouvrez le fichier config.php et mettez à jour les informations entre guillemets pour qu'ils correspondent aux identifiants de la base de données mysql dans le fichier my.ini (les informations actuellement rentrées sont celle de base pour xammp, il est donc fort possible que vous n'ayez pas besoin de les changer)
 
 ###Installation du site 
 
@@ -20,6 +21,3 @@
 -Dans l'interface qui s'affiche, entrer un nom d'utilisateur et un mot de passe, il servira d'accès admin au back-office
 -Le site devrait être fonctionnel
 
--Supprimer le fichier setup.php dans le répertoire htdocs dnas le répertoire d'installation de xampp
-
--Dans le cas ou vous ayiez des erreurs d'accès à la base de données, le fichier texte de configuration est dans GarageVParrot/private/config.php
